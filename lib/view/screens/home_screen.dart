@@ -25,29 +25,31 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: viewModel.isLoading
-          ? Center(child: CircularProgressIndicator())
-          : viewModel.errorMessage != null
-          ? Center(child: Text(viewModel.errorMessage!))
-          : Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      label: Text("Search for deals"),
-                      suffixIcon: Icon(Icons.search),
-                    ),
-                    onChanged: (value) {
-                      viewModel.addtoStream(value);
-                    },
-                  ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                Expanded(
-                  child: ListView.builder(
+                label: Text("Search for deals"),
+                suffixIcon: Icon(Icons.search),
+              ),
+              onChanged: (value) {
+                viewModel.fetchDealsByTitle(value);
+              },
+            ),
+          ),
+          Expanded(
+            child: viewModel.isLoading
+                ? Center(child: CircularProgressIndicator())
+                : viewModel.errorMessage != null
+                ? Center(child: Text(viewModel.errorMessage!))
+                : viewModel.gameDeals.isEmpty
+                ? Center(child: Text("No Deals Found"))
+                : ListView.builder(
                     itemCount: viewModel.gameDeals.length,
                     itemBuilder: (context, index) {
                       final deal = viewModel.gameDeals[index];
@@ -64,9 +66,9 @@ class HomeScreen extends StatelessWidget {
                       );
                     },
                   ),
-                ),
-              ],
-            ),
+          ),
+        ],
+      ),
     );
   }
 }

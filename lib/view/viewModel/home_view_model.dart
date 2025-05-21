@@ -12,17 +12,6 @@ class HomeViewModel extends ChangeNotifier {
 
   List<GameDealModel> get gameDeals => _gameDeals;
 
-  final _searchStreamController = StreamController<String>();
-  
-  Stream get searchStream => _searchStreamController.stream;
-
-  void addtoStream(String value) {
-    _searchStreamController.sink.add(value);
-  }
-
-  void disposeStream() {
-    _searchStreamController.close();
-  }
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -36,6 +25,22 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
     try {
       _gameDeals = await dealsRemoteDataRepoImpl.fetchDeals();
+      print("gameDeals: ${_gameDeals[0].title}");
+      _isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      _errorMessage = e.toString();
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> fetchDealsByTitle(String title) async {
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+    try {
+      _gameDeals = await dealsRemoteDataRepoImpl.fetchDealsByTitle(title);
       print("gameDeals: ${_gameDeals[0].title}");
       _isLoading = false;
       notifyListeners();

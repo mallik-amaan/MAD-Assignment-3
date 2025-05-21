@@ -6,7 +6,6 @@ import 'package:games_deal_tracking/data/services/api_service.dart';
 class DealsRemoteDataRepoImpl extends DealsRemoteDataRepo {
   final ApiService apiService;
   DealsRemoteDataRepoImpl(this.apiService);
-  
 
   @override
   Future<List<GameDealModel>> fetchDeals() async {
@@ -25,12 +24,12 @@ class DealsRemoteDataRepoImpl extends DealsRemoteDataRepo {
         });
     return gameDeals;
   }
-  
+
   @override
   Future<List<GameDealModel>> fetchDealsByTitle(String title) async {
-      List<GameDealModel> gameDeals = [];
+    List<GameDealModel> gameDeals = [];
     await apiService
-        .fetchData()
+        .fetchDataByTitle(title)
         .then((value) {
           final List<dynamic> jsonList = value;
           for (var json in jsonList) {
@@ -43,6 +42,4 @@ class DealsRemoteDataRepoImpl extends DealsRemoteDataRepo {
         });
     return gameDeals;
   }
-
-  
 }
