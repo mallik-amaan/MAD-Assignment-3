@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:games_deal_tracking/data/model/game_deal_model.dart';
-import 'package:games_deal_tracking/view/viewModel/home_view_model.dart';
+import 'package:games_deal_tracking/viewModel/home_view_model.dart';
 import 'package:games_deal_tracking/view/widgets/deal_card.dart';
 import 'package:provider/provider.dart';
 
