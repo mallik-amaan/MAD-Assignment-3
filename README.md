@@ -1,16 +1,47 @@
-# games_deal_tracking
+"Game Deals App"
 
-A new Flutter project.
+This app is built using Flutter and uses the CheapShark API to get data.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## Contributing
 
-A few resources to get you started if this is your first Flutter project:
+Contributions are always welcome!
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+To setup this app, clone or fork this repo.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Please adhere to this project's `code of conduct`.
+
+
+## Installation
+
+Install GameDeals App using the following command.
+
+```bash
+  git clone https://github.com/mallik-amaan/MAD-Assignment-3
+```
+
+Run the pub get command.
+
+```bash
+    Flutter pub get
+```
+
+Then run the app.
+
+```bash
+Flutter run
+```
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
+
+## Running Tests
+
+To run tests, run the following command
+
+```bash
+  flutter run test
+```
+

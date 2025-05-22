@@ -13,26 +13,27 @@ class DealCard extends StatelessWidget {
         child: Row(
           children: [
             SizedBox(
-              // child: Image.network(
-              //   item.thumb!,
-              //   width: 100,
-              //   height: 100,
-              //   fit: BoxFit.cover,
-              //   loadingBuilder: (context, child, loadingProgress) {
-              //     if (loadingProgress == null) {
-              //       return child;
-              //     }
-              //     return Center(
-              //       child: CircularProgressIndicator(
-              //         color: Colors.red,
-              //         value: loadingProgress.expectedTotalBytes != null
-              //             ? loadingProgress.cumulativeBytesLoaded /
-              //                   (loadingProgress.expectedTotalBytes ?? 1)
-              //             : null,
-              //       ),
-              //     );
-              //   },
-              // ),
+              child: Image.network(
+                item.thumb!,
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.red,
+                      value:
+                          loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  (loadingProgress.expectedTotalBytes ?? 1)
+                              : null,
+                    ),
+                  );
+                },
+              ),
             ),
             Expanded(
               child: Padding(
@@ -83,9 +84,10 @@ class DealCard extends StatelessWidget {
             ),
             IconButton(
               onPressed: () => saveGame(),
-              icon: item.isSaved!
-                  ? Icon(Icons.bookmark, color: Colors.blue)
-                  : Icon(Icons.bookmark_border, size: 30),
+              icon:
+                  item.isSaved!
+                      ? Icon(Icons.bookmark, color: Colors.blue)
+                      : Icon(Icons.bookmark_border, size: 30),
             ),
           ],
         ),

@@ -11,6 +11,8 @@ void main() {
   });
 
   tearDown(() async {
+      final appDir = await getApplicationDocumentsDirectory();
+      Hive.init(appDir.path);
     await Hive.box<GameDealModel>('gamedeals').close();
   });
 
