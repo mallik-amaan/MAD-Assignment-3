@@ -2,7 +2,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:games_deal_tracking/data/repositories/deals_remote_data_repo_impl.dart';
 import 'package:games_deal_tracking/data/services/api_service.dart';
 import 'package:games_deal_tracking/viewModel/home_view_model.dart';
+import 'package:mockito/annotations.dart';
 
+@GenerateMocks([ApiService,DealsRemoteDataRepoImpl])
 void main() {
   group('HomeViewModel', () {
     final ApiService apiService = ApiService();

@@ -4,6 +4,7 @@ import 'package:games_deal_tracking/data/repositories/deals_remote_data_repo_imp
 import 'package:games_deal_tracking/data/services/api_service.dart';
 import 'package:games_deal_tracking/view/screens/home_screen.dart';
 import 'package:games_deal_tracking/viewModel/home_view_model.dart';
+import 'package:games_deal_tracking/viewModel/saved_deals_view_model.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
@@ -27,17 +28,18 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<ApiService>(create: (_) => ApiService()),
-
         Provider<DealsRemoteDataRepoImpl>(
-          create: (context) =>
-              DealsRemoteDataRepoImpl(context.read<ApiService>()),
+          create: (context) => DealsRemoteDataRepoImpl(context.read<ApiService>()),
         ),
         ChangeNotifierProvider<HomeViewModel>(
           create: (context) {
             final viewModel = HomeViewModel(context.read<DealsRemoteDataRepoImpl>());
             viewModel.fetchDeals();
             return viewModel;
-          }
+          },
+        ),
+        ChangeNotifierProvider<SavedDealsViewModel>(
+          create: (_) => SavedDealsViewModel(),
         ),
       ],
       child: MaterialApp(

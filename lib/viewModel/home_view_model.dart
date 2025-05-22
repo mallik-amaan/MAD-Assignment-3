@@ -9,9 +9,7 @@ class HomeViewModel extends ChangeNotifier {
   HomeViewModel(this.dealsRemoteDataRepoImpl);
 
   List<GameDealModel> _gameDeals = [];
-
   List<GameDealModel> get gameDeals => _gameDeals;
-
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -25,7 +23,11 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
     try {
       _gameDeals = await dealsRemoteDataRepoImpl.fetchDeals();
-      print("gameDeals: ${_gameDeals[0].title}");
+      final gameDealBox = Hive.box<GameDealModel>('gamedeals');
+      final savedGameIds = gameDealBox.values.map((deal) => deal.gameID).toSet();
+      for (var deal in _gameDeals) {
+        deal.isSaved = savedGameIds.contains(deal.gameID);
+      }
       _isLoading = false;
       notifyListeners();
     } catch (e) {
@@ -41,7 +43,11 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
     try {
       _gameDeals = await dealsRemoteDataRepoImpl.fetchDealsByTitle(title);
-      print("gameDeals: ${_gameDeals[0].title}");
+      final gameDealBox = Hive.box<GameDealModel>('gamedeals');
+      final savedGameIds = gameDealBox.values.map((deal) => deal.gameID).toSet();
+      for (var deal in _gameDeals) {
+        deal.isSaved = savedGameIds.contains(deal.gameID);
+      }
       _isLoading = false;
       notifyListeners();
     } catch (e) {
@@ -56,7 +62,7 @@ class HomeViewModel extends ChangeNotifier {
       final gameDealBox = Hive.box<GameDealModel>('gamedeals');
       await gameDealBox.add(gameDeal);
     } catch (error) {
-      print("error occured while saving: $error");
+      print("Error occurred while saving: $error");
     }
     notifyListeners();
   }
@@ -72,14 +78,8 @@ class HomeViewModel extends ChangeNotifier {
         await gameDealBox.delete(key);
       }
     } catch (error) {
-      print("error while deleting: $error");
+      print("Error while deleting: $error");
     }
     notifyListeners();
-  }
-
-  List<GameDealModel> getaSavedGamesFromHive() {
-    final gameDealBox = Hive.box<GameDealModel>('gamedeals');
-    final gameDealList = gameDealBox.values.toList();
-    return gameDealList;
   }
 }
